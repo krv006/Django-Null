@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db.models import CharField, Model, IntegerField, Manager, ForeignKey, CASCADE, AutoField, BigIntegerField, \
     BinaryField, DurationField, SmallIntegerField, FilePathField, GeneratedField, GenericIPAddressField, \
-    PositiveBigIntegerField, PositiveSmallIntegerField, SmallAutoField
+    PositiveBigIntegerField, PositiveSmallIntegerField, SmallAutoField, Index
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 import re
@@ -129,3 +129,17 @@ class Section(Model):
     i = PositiveBigIntegerField()  # todo + Number
     j = PositiveSmallIntegerField()  # todo - Number
     k = SmallAutoField(primary_key=True)  # todo auto small Number create
+
+
+class Customer(Model):
+    first_name = CharField(max_length=100)
+    last_name = CharField(max_length=100)
+
+    class Meta:
+        indexes = [
+            Index(fields=["last_name", "first_name"]),
+            Index(fields=["first_name"], name="first_name_idx"),
+        ]
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
