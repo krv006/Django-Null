@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db.models import CharField, Model, IntegerField, Manager, ForeignKey, CASCADE, AutoField, BigIntegerField, \
     BinaryField, DurationField, SmallIntegerField, FilePathField, GeneratedField, GenericIPAddressField, \
-    PositiveBigIntegerField, PositiveSmallIntegerField, SmallAutoField, Index
+    PositiveBigIntegerField, PositiveSmallIntegerField, SmallAutoField, Index, Q, CheckConstraint
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 import re
@@ -134,11 +134,13 @@ class Section(Model):
 class Customer(Model):
     first_name = CharField(max_length=100)
     last_name = CharField(max_length=100)
+    age = IntegerField()
 
     class Meta:
         indexes = [
             Index(fields=["last_name", "first_name"]),
             Index(fields=["first_name"], name="first_name_idx"),
+            CheckConstraint(condition=Q(age__gte=18), name="age_gte_18"),
         ]
 
     def __str__(self):
