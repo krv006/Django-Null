@@ -2,10 +2,13 @@ import uuid
 from datetime import datetime
 
 import pytz
+from django.contrib.auth import get_user_model
+from django.contrib.auth.middleware import get_user
 from django.contrib.auth.models import AbstractUser
-from django.db.models import CharField, Model, ForeignKey, CASCADE, UUIDField, DateTimeField, TimeField, DurationField
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.db.models import CharField, Model, ForeignKey, CASCADE, UUIDField, DateTimeField, TimeField, DurationField, \
+    ImageField, PositiveIntegerField
 from django.utils import timezone
-
 
 # from apps.forms import botir_username
 
@@ -172,5 +175,40 @@ from django.utils import timezone
 #     times = DateTimeField(default=timezone.localtime(get_tashkent_time()))
 #     # timezone.localtime(utc_time_on_db)
 
-class Product(Model):
-    model = DurationField(null=True, blank=True)
+# class Product(Model):
+#     model = DurationField(null=True, blank=True)
+#     photo = ImageField(null=True, blank=True)  # todo Image di delete qilish
+#
+#     def delete(self, using=None, keep_parents=False):
+#         self.photo.delete(save=False)
+#         return super().delete(using, keep_parents)
+
+
+# get_user_model()
+#
+#
+# class A(Model):
+#     name = CharField(max_length=255, unique=True)
+#
+#
+# class B(Model):
+#     name = CharField(max_length=255, unique=True)
+#
+#
+# class C(Model):
+#     name = CharField(max_length=255, unique=True)
+#
+#
+# class D(Model):
+#     name = CharField(max_length=255, unique=True)
+#
+#
+# class Image(Model):
+#     image = ImageField(upload_to='images')
+#     content_type = ForeignKey('contenttypes.ContentType', on_delete=CASCADE)
+#     object_id = PositiveIntegerField()
+#     content_object = GenericForeignKey('contenttypes.ContentType', 'object_id')
+
+
+class Hi(Model):
+    pass

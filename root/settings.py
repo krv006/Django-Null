@@ -35,7 +35,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'root.urls'
 
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -55,6 +54,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'root.wsgi.application'
 # AUTH_USER_MODEL = 'apps.User'
+
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -72,7 +73,6 @@ DATABASES = {
         "PORT": os.getenv('PG_PORT'),
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -98,5 +98,10 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
