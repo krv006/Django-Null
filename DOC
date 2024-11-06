@@ -1,0 +1,101 @@
+todo ##########################################################################################################
+TODO IMAGE DELETE for media file
+
+class Product(Model):
+    model = DurationField(null=True, blank=True)
+    photo = ImageField(null=True, blank=True)  # todo Image di delete qilish
+
+    def delete(self, using=None, keep_parents=False):
+        self.photo.delete(save=False)
+        return super().delete(using, keep_parents)
+
+todo ##########################################################################################################
+
+
+todo ##########################################################################################################
+TODO 1 class and 4 image class
+todo models
+class A(Model):
+    name = CharField(max_length=255)
+    images = GenericRelation('apps.Image')
+
+
+class B(Model):
+    name = CharField(max_length=255)
+    images = GenericRelation('apps.Image')
+
+
+class C(Model):
+    name = CharField(max_length=255)
+    images = GenericRelation('apps.Image')
+
+
+class D(Model):
+    name = CharField(max_length=255)
+    images = GenericRelation('apps.Image')
+
+    class Meta:
+        abstract = True
+
+class Image(Model):
+    image = ImageField()
+    content_type = ForeignKey('contenttypes.ContentType', CASCADE, limit_choices_to={'model__in': ['a', 'b', 'c', 'd']})
+    object_id = PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+todo admin
+from django.contrib import admin
+from django.contrib.admin import StackedInline
+from django.contrib.contenttypes.models import ContentType
+
+from apps.models import Image, A, C, D, B
+
+
+class ImageStackedInline(StackedInline):
+    model = Image
+    extra = 1
+    min = 1
+
+
+@admin.register(ContentType)
+class ContentTypeAdmin(admin.ModelAdmin):
+    search_fields = ['app_label', 'model']
+
+
+@admin.register(Image)
+class ImageAdmin(admin.ModelAdmin):
+    autocomplete_fields = ['content_type']
+
+    # def formfield_for_foreignkey(self, db_field, request, **kwargs):
+    #     # if db_field.name == 'content_type':
+    #     #     kwargs["queryset"] = ContentType.objects.filter(model__in=['a', 'b', 'c', 'd'])
+    #     return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+
+@admin.register(A)
+class AAdmin(admin.ModelAdmin):
+    # inlines = ImageStackedInline,
+    pass
+
+
+@admin.register(B)
+class BAdmin(admin.ModelAdmin):
+    #     inlines = ImageStackedInline,
+    pass
+
+
+@admin.register(C)
+class CAdmin(admin.ModelAdmin):
+    #     inlines = ImageStackedInline,
+    pass
+
+
+@admin.register(D)
+class DAdmin(admin.ModelAdmin):
+    #     inlines = ImageStackedInline,
+    pass
+
+todo ##########################################################################################################
+
+
+todo ##########################################################################################################
