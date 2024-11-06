@@ -3,7 +3,7 @@ from datetime import datetime
 
 import pytz
 from django.contrib.auth.models import AbstractUser
-from django.db.models import CharField, Model, ForeignKey, CASCADE, UUIDField, DateTimeField, TimeField
+from django.db.models import CharField, Model, ForeignKey, CASCADE, UUIDField, DateTimeField, TimeField, DurationField
 from django.utils import timezone
 
 
@@ -147,27 +147,30 @@ from django.utils import timezone
 #     def __str__(self):
 #         return f"{self.first_name} {self.last_name}"
 
-def get_tashkent_time():
-    return timezone.now().astimezone(pytz.timezone('Asia/Tashkent'))
-
-
-def get_current_time_utc_plus_5():
-    # UTC vaqtini olish
-    utc_now = timezone.now()
-    # UTC+5 ga o'zgartirish
-    utc_plus_5 = utc_now.astimezone(pytz.timezone('Etc/GMT-5'))
-    return utc_plus_5
-
-
-class Category(Model):
-    uuid = UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = CharField(max_length=255)
-    created_at = DateTimeField(auto_now_add=True)
-
+# def get_tashkent_time():
+#     return timezone.now().astimezone(pytz.timezone('Asia/Tashkent'))
+#
+#
+# def get_current_time_utc_plus_5():
+#     # UTC vaqtini olish
+#     utc_now = timezone.now()
+#     # UTC+5 ga o'zgartirish
+#     utc_plus_5 = utc_now.astimezone(pytz.timezone('Etc/GMT-5'))
+#     return utc_plus_5
+#
+#
+# class Category(Model):
+#     uuid = UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+#     name = CharField(max_length=255)
+#     created_at = DateTimeField(auto_now_add=True)
+#
+#
+# class Product(Model):
+#     uuid = UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+#     name = CharField(max_length=255)
+#     category = ForeignKey("apps.Category", on_delete=CASCADE)
+#     times = DateTimeField(default=timezone.localtime(get_tashkent_time()))
+#     # timezone.localtime(utc_time_on_db)
 
 class Product(Model):
-    uuid = UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = CharField(max_length=255)
-    category = ForeignKey("apps.Category", on_delete=CASCADE)
-    times = DateTimezField(default=timezone.localtime(get_tashkent_time()))
-    # timezone.localtime(utc_time_on_db)
+    model = DurationField(null=True, blank=True)
