@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 
-from apps.models import History
+# from apps.models import History
 
 
 # from apps.models import History
@@ -39,7 +39,7 @@ from apps.models import History
 # class ProductAdmin(ModelAdmin):
 #     list_display = ('name', 'category_id', 'category_uuid', 'category_slug')
 
-
-@admin.register(History)
-class HistoryAdmin(admin.ModelAdmin):
-    pass
+#
+# @admin.register(History)
+# class HistoryAdmin(admin.ModelAdmin):
+#     pass
