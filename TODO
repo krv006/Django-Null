@@ -33,3 +33,12 @@ class History(models.Model):
             'January', 'February', 'March', 'April', 'May', 'June',
             'July', 'August', 'September', 'October', 'November', 'December'
         ])
+
+
+    def save(self, *args, **kwargs):
+        current_minute = datetime.datetime.now().minute
+        if current_minute % 2 == 0:
+            self.minute = current_minute
+        else:
+            print(f"Current minute is odd: {current_minute}")
+        super().save(*args, **kwargs)

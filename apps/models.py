@@ -2,6 +2,9 @@ import uuid
 from datetime import datetime
 from secrets import choice
 import calendar
+from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator
+import datetime
 
 import pytz
 from django.contrib.auth import get_user_model
@@ -9,6 +12,8 @@ from django.contrib.auth.middleware import get_user
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.postgres.functions import RandomUUID
+from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator
 from django.db.models import CharField, Model, ForeignKey, CASCADE, UUIDField, DateTimeField, TimeField, DurationField, \
     ImageField, PositiveIntegerField, AutoField, SlugField, Choices, IntegerChoices, IntegerField
 from django.utils import timezone
@@ -268,6 +273,16 @@ from django.utils.translation import gettext_lazy as _
 #     category_slug = ForeignKey('apps.Category', CASCADE, to_field='slug', related_name='products_by_slug',
 #                                db_column='salom')
 
-
+#
+# def time_valid(value):
+#     time = timezone.now().minute
+#     if time % 2 != 0:
+#         raise ValidationError(f"Vaqt {time} juft emas.")
+#     return value
+#
+#
 # class History(Model):
-#     month = IntegerField()
+#     month = IntegerField(choices=enumerate(list(calendar.month_name)[1:], start=1), validators=[time_valid])
+#
+#     def __str__(self):
+#         return list(calendar.month_name)[self.month]
