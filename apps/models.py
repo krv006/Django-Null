@@ -1,15 +1,21 @@
 import uuid
 from datetime import datetime
+from secrets import choice
+import calendar
 
 import pytz
 from django.contrib.auth import get_user_model
 from django.contrib.auth.middleware import get_user
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.postgres.functions import RandomUUID
 from django.db.models import CharField, Model, ForeignKey, CASCADE, UUIDField, DateTimeField, TimeField, DurationField, \
-    ImageField, PositiveIntegerField, AutoField, SlugField
+    ImageField, PositiveIntegerField, AutoField, SlugField, Choices, IntegerChoices, IntegerField
 from django.utils import timezone
 from django.utils.text import slugify
+
+from django.db.models import Model, IntegerField
+from django.utils.translation import gettext_lazy as _
 
 
 # from apps.forms import botir_username
@@ -235,27 +241,33 @@ from django.utils.text import slugify
 #     abstract = True
 
 
-class Category(Model):
-    name = CharField(max_length=255, unique=True)
-    id = AutoField(primary_key=True)
-    uuid = UUIDField(default=uuid.uuid4, editable=False, unique=True)
-    slug = SlugField(unique=True)
+# class Category(Model):
+#     name = CharField(max_length=255, unique=True)
+#     id = AutoField(primary_key=True)
+#     # uuid = UUIDField(default=uuid.uuid4, editable=False, unique=True)
+#     # uuid = UUIDField(primary_key=True, db_default=uuid.uuid4, editable=False, unique=True)
+#     uuid = UUIDField(db_default=RandomUUID, editable=False, unique=True)
+#     slug = SlugField(unique=True)
+#
+#     def save(self, *args, **kwargs):
+#         if not self.slug:
+#             slug = slugify(self.name)
+#             original_slug = slug
+#             counter = 1
+#             while self.__class__.objects.filter(slug=slug).exists():
+#                 slug = f"{original_slug}-{counter}"
+#                 counter += 1
+#             self.slug = slug
+#         super().save(*args, **kwargs)
+#
+#
+# class Product(Model):
+#     name = CharField(max_length=255)
+#     category_id = ForeignKey('apps.Category', CASCADE, related_name='products_by_id')
+#     category_uuid = ForeignKey('apps.Category', CASCADE, to_field='uuid', related_name='products_by_uuid')
+#     category_slug = ForeignKey('apps.Category', CASCADE, to_field='slug', related_name='products_by_slug',
+#                                db_column='salom')
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            slug = slugify(self.name)
-            original_slug = slug
-            counter = 1
-            while self.__class__.objects.filter(slug=slug).exists():
-                slug = f"{original_slug}-{counter}"
-                counter += 1
-            self.slug = slug
-        super().save(*args, **kwargs)
 
-
-class Product(Model):
-    name = CharField(max_length=255)
-    category_id = ForeignKey('apps.Category', CASCADE, related_name='products_by_id')
-    category_uuid = ForeignKey('apps.Category', CASCADE, to_field='uuid', related_name='products_by_uuid')
-    category_slug = ForeignKey('apps.Category', CASCADE, to_field='slug', related_name='products_by_slug',
-                               db_column='salom')
+# class History(Model):
+#     month = IntegerField()

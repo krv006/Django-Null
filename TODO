@@ -24,3 +24,12 @@ unique_together
 SEE DJANGO OPTION
 
 
+
+from django.db import models
+
+class History(models.Model):
+    class MONTH(models.IntegerChoices):
+        choices = zip(range(1, 13), [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ])

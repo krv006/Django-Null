@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 
-from apps.models import Category, Product
+# from apps.models import History
 
 
 # from apps.models import Product
@@ -26,12 +26,17 @@ from apps.models import Category, Product
 #     pass
 
 
-@admin.register(Category)
-class CategoryAdmin(ModelAdmin):
-    exclude = ('slug',)
-    list_display = ('name', 'uuid', 'slug')
+# @admin.register(Category)
+# class CategoryAdmin(ModelAdmin):
+#     exclude = ('slug',)
+#     list_display = ('name', 'uuid', 'slug')
+#
+#
+# @admin.register(Product)
+# class ProductAdmin(ModelAdmin):
+#     list_display = ('name', 'category_id', 'category_uuid', 'category_slug')
 
 
-@admin.register(Product)
-class ProductAdmin(ModelAdmin):
-    list_display = ('name', 'category_id', 'category_uuid', 'category_slug')
+# @admin.register(History)
+# class HistoryAdmin(admin.ModelAdmin):
+#     pass
