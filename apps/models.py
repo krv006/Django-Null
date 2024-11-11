@@ -7,8 +7,10 @@ from django.contrib.auth.middleware import get_user
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.db.models import CharField, Model, ForeignKey, CASCADE, UUIDField, DateTimeField, TimeField, DurationField, \
-    ImageField, PositiveIntegerField
+    ImageField, PositiveIntegerField, AutoField, SlugField
 from django.utils import timezone
+from django.utils.text import slugify
+
 
 # from apps.forms import botir_username
 
@@ -210,5 +212,50 @@ from django.utils import timezone
 #     content_object = GenericForeignKey('contenttypes.ContentType', 'object_id')
 
 
-class Hi(Model):
-    pass
+# class Hi(Model):
+#     pass
+
+# class SlugBasedModel(Model):
+#     name = CharField(max_length=255)
+#     slug = CharField(max_length=255, unique=True, editable=False)
+#     # todo editable=False bu admindan qoshish kerak emas degani
+#     updated_at = DateTimeField(auto_now_add=True)
+#     created_at = DateTimeField(auto_now=True)
+#
+# def save(self, *args, force_insert=False, force_update=False, using=None, update_fields=None):
+#     if self.slug is None:
+#         slug = slugify(self.name)
+#         if self.__class__.objects.filter(slug=slug).exists():
+#             self.slug += 1
+#
+#     super().save(*args, force_insert=force_insert, force_update=force_update, using=using,
+#                  update_fields=update_fields)
+#
+# class Meta:
+#     abstract = True
+
+
+class Category(Model):
+    name = CharField(max_length=255, unique=True)
+    id = AutoField(primary_key=True)
+    uuid = UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    slug = SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            slug = slugify(self.name)
+            original_slug = slug
+            counter = 1
+            while self.__class__.objects.filter(slug=slug).exists():
+                slug = f"{original_slug}-{counter}"
+                counter += 1
+            self.slug = slug
+        super().save(*args, **kwargs)
+
+
+class Product(Model):
+    name = CharField(max_length=255)
+    category_id = ForeignKey('apps.Category', CASCADE, related_name='products_by_id')
+    category_uuid = ForeignKey('apps.Category', CASCADE, to_field='uuid', related_name='products_by_uuid')
+    category_slug = ForeignKey('apps.Category', CASCADE, to_field='slug', related_name='products_by_slug',
+                               db_column='salom')
