@@ -44,4 +44,4 @@ class History(models.Model):
         super().save(*args, **kwargs)
 
 
-todo prefetch_related, select_related, raw, and &, xor ^ , or |,
+todo prefetch_related, select_related, raw, and &, xor ^ , or |, F, Q
