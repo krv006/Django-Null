@@ -42,3 +42,6 @@ class History(models.Model):
         else:
             print(f"Current minute is odd: {current_minute}")
         super().save(*args, **kwargs)
+
+
+todo prefetch_related, select_related, raw, and &, xor ^ , or |,

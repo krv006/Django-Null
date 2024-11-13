@@ -1,0 +1,53 @@
+# Entry.objects.exclude(pub_date__gt=datetime.date(2005, 1, 3), headline="Hello")
+
+import os
+from audioop import reverse
+from datetime import datetime
+from itertools import count
+
+import django
+from django.db.models import Count
+from django.db.models.functions import ExtractMonth
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'root.settings')
+
+django.setup()
+
+from apps.models import Product
+
+# for i in Product.objects.filter(created_at_month=11):
+#     print(i)
+
+# for i in Product.objects.exclude(created_at__month=10):
+#     print(i)
+
+# for i in Product.objects.annotate(created_at_month=ExtractMonth('created_at')).filter(created_at_month=11):
+#     print(i)
+
+# for i in Product.objects.alias(Count('name')):
+#     print(i)
+
+# for i in Product.objects.alias(created_at_month=ExtractMonth('created_at')).filter(created_at_month=11):
+#     print(i) # todo aqtinchalik hisoblangan ustunlarni qo‘shish uchun qulay usuldir.
+
+# products = Product.objects.order_by('price')
+# print(products)
+
+# products = Product.objects.order_by('price').reverse()
+# print(products)
+
+# products = Product.objects.order_by('created_at')[:5]  # O'sish tartibida saralaydi
+# products_reversed = products.reverse()  # Natijalarni teskari qilib o'zgartiradi
+# print(products_reversed)
+
+# todo reverse() bu order_by di teskari qilib beradi
+
+
+# products = Product.objects.order_by('price')
+# products = products.extra(select={'null_check': 'price IS NULL'}, order_by=['null_check', '-price'])
+#
+# for product in products:
+#     print(product.price)
+
+for i in Product.objects.order_by('name'):
+    print(i)

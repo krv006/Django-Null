@@ -15,7 +15,7 @@ from django.contrib.postgres.functions import RandomUUID
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db.models import CharField, Model, ForeignKey, CASCADE, UUIDField, DateTimeField, TimeField, DurationField, \
-    ImageField, PositiveIntegerField, AutoField, SlugField, Choices, IntegerChoices, IntegerField
+    ImageField, PositiveIntegerField, AutoField, SlugField, Choices, IntegerChoices, IntegerField, TextField
 from django.utils import timezone
 from django.utils.text import slugify
 
@@ -286,3 +286,21 @@ from django.utils.translation import gettext_lazy as _
 #
 #     def __str__(self):
 #         return list(calendar.month_name)[self.month]
+
+class Category(Model):
+    name = CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+class Product(Model):
+    name = CharField(max_length=255)
+    price = PositiveIntegerField(null=True, blank=True)
+    description = TextField()
+    image = ImageField(upload_to='products/%Y/%m/%d')
+    created_at = DateTimeField(auto_now_add=True)
+    category = ForeignKey('apps.Category', CASCADE)
+
+    def __str__(self):
+        return self.name

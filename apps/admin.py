@@ -1,5 +1,7 @@
 from django.contrib import admin
-from django.contrib.admin import ModelAdmin
+
+from apps.models import Category, Product
+
 
 # from apps.models import History
 
@@ -43,3 +45,17 @@ from django.contrib.admin import ModelAdmin
 # @admin.register(History)
 # class HistoryAdmin(admin.ModelAdmin):
 #     pass
+
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+
+        return qs
