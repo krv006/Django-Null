@@ -66,4 +66,25 @@ from apps.models import Product, Category
 # s = categories.union(products)
 #
 # for item in s:
-#     print(f"{item['name']} - {item['type']}")
+#     print(f"{item['name']} - {item['type']}") # todo product va category filter name ikkalasda xam bir xil name borligini chiqazish
+
+#
+# products = Product.objects.extra(where=["price > 1200000"])
+# for product in products:
+#     print(product.name, product.price)
+#
+# products = Product.objects.extra(order_by=['-price'])
+# for product in products:
+#     print(product.price)
+
+products = Product.objects.only('name', 'price')
+for product in products:
+    print(f"{product.name} - {product.price}")
+
+# raw todo bunda postgres query yozsa boladi
+# defer todo yuklanmaydi
+
+products = Product.objects.defer('description')
+for product in products:
+    print(product.name)
+    # print(product.description)
