@@ -3,17 +3,17 @@
 import os
 from audioop import reverse
 from datetime import datetime
-from itertools import count
+from itertools import count, product
 
 import django
-from django.db.models import Count
+from django.db.models import Count, Value
 from django.db.models.functions import ExtractMonth
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'root.settings')
 
 django.setup()
 
-from apps.models import Product
+from apps.models import Product, Category
 
 # for i in Product.objects.filter(created_at_month=11):
 #     print(i)
@@ -49,5 +49,21 @@ from apps.models import Product
 # for product in products:
 #     print(product.price)
 
-for i in Product.objects.order_by('name'):
-    print(i)
+# for i in Product.objects.order_by('name'):
+#     print(i)
+
+# for i in Category.objects.all():
+#     print("category-> ", i)
+#
+# for i in Product.objects.all():
+#     print("product-> ", i)
+
+
+# categories = Category.objects.filter(name__icontains="texnika").values("name").annotate(type=Value("Category"))
+#
+# products = Product.objects.filter(name__icontains="texnika").values("name").annotate(type=Value("Product"))
+#
+# s = categories.union(products)
+#
+# for item in s:
+#     print(f"{item['name']} - {item['type']}")

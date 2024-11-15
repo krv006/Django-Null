@@ -54,8 +54,13 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+    # def get_queryset(self, request):
+    #     qs = super().get_queryset(request)
+    #
+    #     return qs
+    pass
 
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-
-        return qs
+    # products = Product.objects.select_related('category').all()
+    #
+    # for product in products:
+    #     print(f"Mahsulot: {product.name}, Kategoriya: {product.category.name}")
