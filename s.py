@@ -88,3 +88,7 @@ products = Product.objects.defer('description')
 for product in products:
     print(product.name)
     # print(product.description)
+
+# raw di korib kelish kere buzish uchun kere boladi sayt lardi
+
+
