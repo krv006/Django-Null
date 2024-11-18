@@ -298,9 +298,9 @@ class Product(Model):
     name = CharField(max_length=255)
     price = PositiveIntegerField(null=True, blank=True)
     description = TextField()
-    image = ImageField(upload_to='products/%Y/%m/%d')
-    created_at = DateTimeField(auto_now_add=True)
-    category = ForeignKey('apps.Category', CASCADE)
+    image = ImageField(upload_to='products/%Y/%m/%d', null=True, blank=True)
+    created_at = DateTimeField(auto_now_add=True, null=True, blank=True)
+    category = ForeignKey('apps.Category', CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
