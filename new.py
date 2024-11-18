@@ -8,7 +8,7 @@ from venv import create
 
 import django
 from django.db import transaction
-from django.db.models import Count, Q, F
+from django.db.models import Count, Q, F, Min
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'root.settings')
 
@@ -107,5 +107,20 @@ from apps.models import Product
 # p = Product.objects.in_bulk(['banan', 'apple'], field_name='name')
 # print(p)
 
+# p = Product.objects.latest('name')
+# p1 = Product.objects.first
+# print(p1)
+# qs = Product.objects.order_by('name')
+#
+# p = Product.objects.order_by('price')
+# print(p)
+
 # todo polars, numpy, pandas -> agar komp 4gb bolsa
-#   mana shular orqali 20gb li narsani bolib bolib ochb olsa boladi
+#  mana shular orqali 20gb li narsani bolib bolib ochb olsa boladi
+
+
+min_price = Product.objects.aggregate(Min('price'))['price__min']
+
+if min_price is not None:
+    Product.objects.update(price=F('price') + min_price)
+    print('OK')
