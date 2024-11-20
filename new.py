@@ -14,7 +14,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'root.settings')
 
 django.setup()
 
-from apps.models import Product
+from apps.models import Product, User
 
 # p = Product.objects.get(id=1)
 # print(p)
@@ -115,8 +115,6 @@ from apps.models import Product
 # p = Product.objects.order_by('price')
 # print(p)
 
-# todo polars, numpy, pandas -> agar komp 4gb bolsa
-#  mana shular orqali 20gb li narsani bolib bolib ochb olsa boladi
 
 
 # min_price = Product.objects.aggregate(Min('price'))['price__min']
@@ -141,5 +139,28 @@ from apps.models import Product
 #     print(i)
 
 
-# todo https://docs.djangoproject.com/en/5.1/ref/models/database-functions/
+
+# vowels = ('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U')
+# l_user = User.objects.latest('date_joined')
+# a = Product.objects.filter(user=l_user, name__in=vowels).update(price=F('price') + 10000)
+# print(a)
+
+# l_user = User.objects.last()
+# print(l_user)
+
+
+
+# user = User.objects.filter(date_joined__year=2020)
+# print(user)
+
+
+# p = Product.objects.filter(
+#     price__range=(25000, 35000),
+#     description__isnull=False,
+#     name__icontains='a'
+# )
+# print(p)
+
+# products = Product.objects.filter(price__gte=2000, price__lte=35000, name__icontains='a').exclude(description__isnull=True)
+
 

@@ -8,7 +8,7 @@ import datetime
 
 import pytz
 from django.contrib.auth import get_user_model
-from django.contrib.auth.middleware import get_user
+# from django.contrib.auth.middleware import get_user
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.postgres.functions import RandomUUID
@@ -301,8 +301,11 @@ class Product(Model):
     image = ImageField(upload_to='products/%Y/%m/%d', null=True, blank=True)
     created_at = DateTimeField(auto_now_add=True, null=True, blank=True)
     category = ForeignKey('apps.Category', CASCADE, null=True, blank=True)
+    user = ForeignKey('apps.User', CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
 
 
+class User(AbstractUser):
+    pass

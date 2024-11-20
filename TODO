@@ -45,3 +45,18 @@ class History(models.Model):
 
 
 todo prefetch_related, select_related, raw, and &, xor ^ , or |, F, Q
+todo polars, numpy, pandas -> agar komp 4gb bolsa mana shular orqali 20gb li narsani bolib bolib ochb olsa boladi
+todo https://docs.djangoproject.com/en/5.1/ref/models/database-functions/
+todo custom data type, custom field
+
+
+"""
+
+todo https://docs.djangoproject.com/en/5.1/
+todo https://docs.djangoproject.com/en/5.1/topics/
+todo KORIB CHIQISH KERAK
+
+GEODJANGO -> MAP BN ISHLASH UCHUN
+WEB APPLICATION TOOLS -> korib chiqish uchun
+
+"""
