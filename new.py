@@ -8,7 +8,7 @@ from venv import create
 
 import django
 from django.db import transaction
-from django.db.models import Count, Q, F, Min
+from django.db.models import Count, Q, F, Min, Subquery, Sum
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'root.settings')
 
@@ -119,8 +119,27 @@ from apps.models import Product
 #  mana shular orqali 20gb li narsani bolib bolib ochb olsa boladi
 
 
-min_price = Product.objects.aggregate(Min('price'))['price__min']
+# min_price = Product.objects.aggregate(Min('price'))['price__min']
+#
+# if min_price is not None:
+#     Product.objects.update(price=F('price') + min_price)
+#     print('OK')
 
-if min_price is not None:
-    Product.objects.update(price=F('price') + min_price)
-    print('OK')
+# min_price_subquery = Product.objects.values('price').order_by('price')[:1]
+# s = Product.objects.update(price=F('price') + Subquery(min_price_subquery))
+# print(s)
+
+# s = Product.objects.raw('select * from apps_product')
+# print(s)
+
+# results = Product.objects.values(c_name=F('category__name')).annotate(Sum('price'))
+# for i in results:
+#     print(i)
+
+# p = Product.objects.values('name', 'category').annotate(sum=Sum('price', default=0), count_name=Count('name'))
+# for i in p:
+#     print(i)
+
+
+# todo https://docs.djangoproject.com/en/5.1/ref/models/database-functions/
+
