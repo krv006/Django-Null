@@ -2,6 +2,8 @@ import uuid
 from datetime import datetime
 from secrets import choice
 import calendar
+
+from asgiref.sync import sync_to_async
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 import datetime
@@ -287,25 +289,28 @@ from django.utils.translation import gettext_lazy as _
 #     def __str__(self):
 #         return list(calendar.month_name)[self.month]
 
-class Category(Model):
-    name = CharField(max_length=255)
-
-    def __str__(self):
-        return self.name
-
-
-class Product(Model):
-    name = CharField(max_length=255)
-    price = PositiveIntegerField(null=True, blank=True)
-    description = TextField()
-    image = ImageField(upload_to='products/%Y/%m/%d', null=True, blank=True)
-    created_at = DateTimeField(auto_now_add=True, null=True, blank=True)
-    category = ForeignKey('apps.Category', CASCADE, null=True, blank=True)
-    user = ForeignKey('apps.User', CASCADE, null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
-
-class User(AbstractUser):
-    pass
+# class Category(Model):
+#     name = CharField(max_length=255)
+#
+#     def __str__(self):
+#         return self.name
+#
+#     async def get_products(self):
+#         return await sync_to_async(self.product_set.all())()
+#
+#
+# class Product(Model):
+#     name = CharField(max_length=255)
+#     price = PositiveIntegerField(null=True, blank=True)
+#     description = TextField()
+#     image = ImageField(upload_to='products/%Y/%m/%d', null=True, blank=True)
+#     created_at = DateTimeField(auto_now_add=True, null=True, blank=True)
+#     category = ForeignKey('apps.Category', CASCADE, null=True, blank=True)
+#     user = ForeignKey('apps.User', CASCADE, null=True, blank=True)
+#
+#     def __str__(self):
+#         return self.name
+#
+#
+# class User(AbstractUser):
+#     pass

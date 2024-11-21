@@ -1,62 +1,29 @@
-10 table
+[Unit]
+Description=WebSocket Daphne Service
+After=network.target
 
-auth 6
-    auth_user
-django 4
-    django_migrations
-    django_session
-    django_content_type
-    id, app_label, model
+[Service]
+User=root
+WorkingDirectory=/var/www/kamron
+ExecStart=/var/www/kamron/.venv/bin/python3 /var/www/kamron/.venv/bin/daphne -b 0.0.0.0 -p 8000 root.asgi:application
+Restart=on-failure
 
-https://docs.djangoproject.com/en/5.1/ref/models/options/
-
-from django.db import models
-
-todo PGCRON
-
-permission
-required_db_features
-index
-proxy
-constraints
-unique_together
-
-SEE DJANGO OPTION
+[Install]
+WantedBy=multi-user.target
 
 
 
-from django.db import models
-
-class History(models.Model):
-    class MONTH(models.IntegerChoices):
-        choices = zip(range(1, 13), [
-            'January', 'February', 'March', 'April', 'May', 'June',
-            'July', 'August', 'September', 'October', 'November', 'December'
-        ])
 
 
-    def save(self, *args, **kwargs):
-        current_minute = datetime.datetime.now().minute
-        if current_minute % 2 == 0:
-            self.minute = current_minute
-        else:
-            print(f"Current minute is odd: {current_minute}")
-        super().save(*args, **kwargs)
+[Unit]
+Description=Django Service
+After=network.target
 
+[Service]
+User=root
+WorkingDirectory=/var/www/kamron
+ExecStart=/var/www/kamron/.venv/bin/python3 /var/www/kamron/.venv/bin/gunicorn --workers 1 --bind unix:/var/www/kamron/django.sock root.asgi:application
+Restart=on-failure
 
-todo prefetch_related, select_related, raw, and &, xor ^ , or |, F, Q
-todo polars, numpy, pandas -> agar komp 4gb bolsa mana shular orqali 20gb li narsani bolib bolib ochb olsa boladi
-todo https://docs.djangoproject.com/en/5.1/ref/models/database-functions/
-todo custom data type, custom field
-
-
-"""
-
-todo https://docs.djangoproject.com/en/5.1/
-todo https://docs.djangoproject.com/en/5.1/topics/
-todo KORIB CHIQISH KERAK
-
-GEODJANGO -> MAP BN ISHLASH UCHUN
-WEB APPLICATION TOOLS -> korib chiqish uchun
-
-"""
+[Install]
+WantedBy=multi-user.target
