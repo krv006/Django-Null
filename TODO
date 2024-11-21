@@ -5,7 +5,7 @@ After=network.target
 [Service]
 User=root
 WorkingDirectory=/var/www/kamron
-ExecStart=/var/www/kamron/.venv/bin/python3 /var/www/kamron/.venv/bin/daphne -b 0.0.0.0 -p 8000 root.asgi:application
+ExecStart=/var/www/kamron/.venv/bin/python3 /var/www/kamron/.venv/bin/daphne -b 0.0.0.0 -p 8001 root.asgi:application
 Restart=on-failure
 
 [Install]
