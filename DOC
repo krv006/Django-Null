@@ -99,3 +99,28 @@ todo ###########################################################################
 
 
 todo ##########################################################################################################
+
+
+https://docs.djangoproject.com/en/5.1/ref/models/querysets/#as-manager
+manager
+queryset
+django async
+
+#takrorlash
+admin
+
+serializer
+drf
+signals
+pytest, unittest
+
+
+
+nginx, gunicorn(service), django
+daphne(service)
+
+gunicorn
+uvicorn
+daphne
+
+uvicorn root.asgi:application
