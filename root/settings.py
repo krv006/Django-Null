@@ -68,14 +68,15 @@ DATABASES = {
         "HOST": 'localhost',
         "PORT": '5432'
     },
-    "second_db": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": 'db2',
-        "USER": 'postgres',
-        "PASSWORD": '1',
-        "HOST": 'localhost',
-        "PORT": '5432'
-    }
+    # todo second db ga xam birdaniga admindan narsa qoshish
+    # "second_db": {
+    #     "ENGINE": "django.db.backends.postgresql_psycopg2",
+    #     "NAME": 'db2',
+    #     "USER": 'postgres',
+    #     "PASSWORD": '1',
+    #     "HOST": 'localhost',
+    #     "PORT": '5432'
+    # }
 }
 
 # DATABASES = {
