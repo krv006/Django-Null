@@ -17,7 +17,8 @@ from django.contrib.postgres.functions import RandomUUID
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db.models import CharField, Model, ForeignKey, CASCADE, UUIDField, DateTimeField, TimeField, DurationField, \
-    ImageField, PositiveIntegerField, AutoField, SlugField, Choices, IntegerChoices, IntegerField, TextField
+    ImageField, PositiveIntegerField, AutoField, SlugField, Choices, IntegerChoices, IntegerField, TextField, \
+    DecimalField, BooleanField, Manager, QuerySet
 from django.utils import timezone
 from django.utils.text import slugify
 
@@ -314,3 +315,36 @@ from django.utils.translation import gettext_lazy as _
 #
 # class User(AbstractUser):
 #     pass
+
+
+# class ProductManager(Manager):
+#
+#     def top_products(self):
+#         return self.filter(is_premium=True, price__gt=10000)
+#
+#
+#     def between_price(self, min_price, max_price):
+#         return self.filter(is_premium=False, price__gte=min_price, price__lte=max_price)
+#
+
+class ProductManager(Manager):
+
+    def get_queryset(self):
+        return super().get_queryset().filter(is_premium=False)
+
+
+class ProductQuerySet(QuerySet):
+    def between_price(self, min_price, max_price):
+        return self.filter(price__gte=min_price, price__lte=max_price)
+
+
+class Product(Model):
+    name = CharField(max_length=255)
+    price = PositiveIntegerField(db_default=0)
+    is_premium = BooleanField(db_default=False)
+    # objects = Manager()
+    # cheap = ProductManager()
+    objects = ProductManager.from_queryset(ProductQuerySet)()
+
+    def __str__(self):
+        return self.name
