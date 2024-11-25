@@ -13,7 +13,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
-    "daphne",
+    # "daphne",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -56,15 +56,25 @@ TEMPLATES = [
 
 
 WSGI_APPLICATION = "root.wsgi.application"
-ASGI_APPLICATION = "root.asgi.application"
+# ASGI_APPLICATION = "root.asgi.application"
 
 # AUTH_USER_MODEL = 'apps.User'
-
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": 'db2',
+        "USER": 'postgres',
+        "PASSWORD": '1',
+        "HOST": 'localhost',
+        "PORT": '5432'
+    },
+    "second_db": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": 'db2',
+        "USER": 'postgres',
+        "PASSWORD": '1',
+        "HOST": 'localhost',
+        "PORT": '5432'
     }
 }
 
